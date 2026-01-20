@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { blogApi } from "./api";
+import type { CreateBlogInput } from "./types";
 
 export const useBlogs = () => {
   return useQuery({
@@ -7,7 +8,6 @@ export const useBlogs = () => {
     queryFn: blogApi.getAll,
   });
 };
-
 
 export const useBlog = (id: string) => {
   return useQuery({
@@ -17,16 +17,16 @@ export const useBlog = (id: string) => {
   });
 };
 
-// export const useCreateBlog = () => {
-//   const queryClient = useQueryClient();
+export const useCreateBlog = () => {
+  const queryClient = useQueryClient();
 
-//   return useMutation({
-//     mutationFn: (data: CreateBlogInput) => blogApi.create(data),
-//     onSuccess: () => {
-//       queryClient.invalidateQueries({ queryKey: ["blogs"] });
-//     },
-//   });
-// };
+  return useMutation({
+    mutationFn: (data: CreateBlogInput) => blogApi.create(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["blogs"] });
+    },
+  });
+};
 
 export const useDeleteBlog = () => {
   const queryClient = useQueryClient();

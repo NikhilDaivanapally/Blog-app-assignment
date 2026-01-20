@@ -10,3 +10,13 @@ export interface Blog {
   createdAt: string;
   updatedAt: string;
 }
+
+
+export interface CreateBlogInput {
+  title: string;
+  description: string;
+  content: string;
+  author: string;
+  coverImage: string;
+  category: string[];
+}

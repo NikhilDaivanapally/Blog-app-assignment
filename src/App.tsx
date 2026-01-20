@@ -5,6 +5,7 @@ import ReactQueryProvider from "./providers/ReactQueryProvider";
 import NotFound from "./components/NotFound";
 import BlogDetailsPage from "./features/blogs/pages/BlogDetailsPage";
 import { Toaster } from "sonner";
+import BlogCreatePage from "./features/blogs/pages/BlogCreatePage";
 
 function App() {
   const router = createBrowserRouter([
@@ -15,6 +16,10 @@ function App() {
         {
           index: true,
           element: <BlogListPage />,
+        },
+        {
+          path: "create",
+          element: <BlogCreatePage />,
         },
         {
           path: "blog/:id",
