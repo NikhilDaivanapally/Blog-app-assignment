@@ -1,73 +1,122 @@
-# React + TypeScript + Vite
+# 📝 Blog Application (React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple blog application built as an assignment to demonstrate **feature-based architecture**, **modern React practices**, and **clean state management**.
 
-Currently, two official plugins are available:
+## 📦 Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Clone the repository
+```bash
+git clone <repository-url>
+cd <project-folder>
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. Install dependencies
+```bash
+npm install
 ```
+
+3. Start the mock backend (json-server)
+```bash
+npm run server
+```
+
+4. Start the development server
+```bash
+npm run dev
+```
+
+The application will be available at http://localhost:5173
+
+---
+
+## 🚀 Tech Stack
+
+- React + TypeScript
+- React Router v7
+- @tanstack/react-query
+- Tailwind CSS
+- shadcn/ui
+- react-hook-form + Zod
+- json-server (mock backend)
+
+---
+
+## 📐 Architecture Strategy
+
+### Feature-Based Folder Structure
+
+The application is organized by **features**, not by file types. Each feature owns its pages, components, hooks, and API logic.
+
+```bash
+src/
+│ ├── layouts/
+│ │ └── MainLayout.tsx
+│ └── providers/
+│ └── ReactQueryProvider.tsx
+│
+├── features/
+│ └── blogs/
+│   ├── pages/
+│   │ ├── BlogListPage.tsx
+│   │ ├── BlogDetailsPage.tsx
+│   │ └── BlogCreatePage.tsx
+│   ├── components/
+│   ├── hooks.ts
+│   ├── types.ts
+│   └── api.ts
+│
+└── components/
+    ├── ui
+    ├── Header.tsx
+    └── Footer.tsx
+```
+
+---
+
+## 🧭 Routing Strategy
+
+REST-style routing is used for clarity and scalability.
+
+```bash
+/ → Blog listing page
+/blog/:id → Blog details page
+/create → Create blog page
+```
+
+🔄 Server State Management
+
+React Query is used for all server-side data:
+- Fetch blog list
+- Fetch single blog details
+- Create new blog
+
+Benefits:
+- Automatic loading and error states
+- Caching and revalidation
+- Clean separation of server state from UI state
+
+
+🎨 UI State Handling
+
+UI states are handled at the feature level:
+
+- Skeleton loaders
+- Empty states
+- Error states
+
+Examples:
+
+- BlogListSkeleton
+- BlogListEmpty
+- BlogListError
+
+Pages control when to render these states.
+
+
+✅ Features Implemented
+
+- Blog listing with loading, error, and empty states
+- Blog details view using route parameters
+- Create blog form with validation
+- Shared layout with navigation
+- Mock backend integration
